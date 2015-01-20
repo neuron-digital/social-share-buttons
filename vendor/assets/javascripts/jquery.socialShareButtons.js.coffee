@@ -23,10 +23,10 @@ $ ->
           new SocialVk $(settings.vkSelector), settings.url
 
           if settings.isInitScroller
-            @initScroller $socials, $postLikes
+            initScroller $socials, $postLikes
 
   initScroller = ($socials, $postLikes) ->
-    checkSocialScroll = ($postLikes) ->
+    checkSocialScroll = ->
       if $(window).scrollTop() > offset
         $postLikes.addClass 'float'
       else
@@ -39,10 +39,12 @@ $ ->
     checkSocialScroll()
 
   class SocialBase
-    initialize: (@$selector, @url) ->
+    constructor: (@$selector, @url) ->
       @getCount()
       @initClick()
+
     getCount: -> throw Error 'unimplemented method'
+
     initClick: -> throw Error 'unimplemented method'
 
   class SocialTw extends SocialBase
@@ -55,7 +57,7 @@ $ ->
           @$selector.parent().find("span").text result
 
     initClick: ->
-      @$selector.on 'click', (e) ->
+      @$selector.on 'click', (e) =>
         e.preventDefault()
         title = encodeURIComponent document.title
         open "https://twitter.com/intent/tweet?text=#{title}&url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
@@ -70,7 +72,7 @@ $ ->
           @$selector.parent().find("span").text result
 
     initClick: ->
-      @$selector.on 'click', (e) ->
+      @$selector.on 'click', (e) =>
         e.preventDefault()
         summary = encodeURIComponent $("meta[property='og:description']").attr("content")
         image = encodeURIComponent $("meta[property='og:image']").attr("content")
@@ -81,14 +83,14 @@ $ ->
   class SocialVk extends SocialBase
     getCount: ->
       window.VK ||= {}
-      window.VK.Share = count: (idx, number) ->
+      window.VK.Share = count: (idx, number) =>
         @$selector.parent().find('span').text number
       $.ajax
         url: "http://vk.com/share.php?act=count&index=1&url=#{@url}"
         dataType: 'jsonp'
 
     initClick: ->
-      @$selector.on 'click', (e) ->
+      @$selector.on 'click', (e) =>
         e.preventDefault()
         title = encodeURIComponent document.title
         open "http://vk.com/share.php?url=#{@url}&title=#{title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
