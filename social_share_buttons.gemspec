@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["aavdeev@go-promo.ru"]
   s.homepage    = "https://github.com/Go-Promo/social-share-buttons"
   s.summary     = "jQuery-plugin for social share buttons"
-  s.description = "jQuery-plugin for social share buttons"
+  s.description = "Plugin loads the number of the sharing specified page and allows you to share it"
   s.license     = "MIT"
 
   s.files = Dir["{lib,vendor}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
