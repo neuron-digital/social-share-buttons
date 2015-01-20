@@ -7,11 +7,11 @@ require "social_share_buttons/version"
 Gem::Specification.new do |s|
   s.name        = "social_share_buttons"
   s.version     = SocialShareButtons::VERSION
-  s.authors     = [""]
-  s.email       = [""]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of SocialShareButtons."
-  s.description = "TODO: Description of SocialShareButtons."
+  s.authors     = ["Go-Promo"]
+  s.email       = ["aavdeev@go-promo.ru"]
+  s.homepage    = "https://github.com/Go-Promo/social-share-buttons"
+  s.summary     = "jQuery-plugin for social share buttons"
+  s.description = "jQuery-plugin for social share buttons"
   s.license     = "MIT"
 
   s.files = Dir["{lib,vendor}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
