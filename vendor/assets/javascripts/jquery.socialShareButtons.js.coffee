@@ -18,9 +18,9 @@ $ ->
         $socials = $ @
         $postLikes = $socials.find(settings.containerSelector)
         if $postLikes.length
-          new SocialTw $(settings.twSelector), settings.url
-          new SocialFb $(settings.fbSelector), settings.url
-          new SocialVk $(settings.vkSelector), settings.url
+          new SocialTw $postLikes.find(settings.twSelector), settings.url
+          new SocialFb $postLikes.find(settings.fbSelector), settings.url
+          new SocialVk $postLikes.find(settings.vkSelector), settings.url
 
           if settings.isInitScroller
             initScroller $socials, $postLikes
@@ -40,8 +40,9 @@ $ ->
 
   class SocialBase
     constructor: (@$selector, @url) ->
-      @getCount()
-      @initClick()
+      if @$selector.length
+        @getCount()
+        @initClick()
 
     getCount: -> throw Error 'unimplemented method'
 
