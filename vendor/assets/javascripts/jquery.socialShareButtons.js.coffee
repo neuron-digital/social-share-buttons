@@ -22,11 +22,11 @@ $ ->
         $socials = $ @
         $container = $socials.find settings.containerSelector
         if $container.length
-          new SocialTw $container, settings
-          new SocialFb $container, settings
-          new SocialVk $container, settings
-          new SocialGp $container, settings
-          new SocialOk $container, settings
+          new App.SocialTw $container, settings
+          new App.SocialFb $container, settings
+          new App.SocialVk $container, settings
+          new App.SocialGp $container, settings
+          new App.SocialOk $container, settings
 
           if settings.isInitScroller
             initScroller $socials, $container

@@ -1,4 +1,6 @@
-class SocialBase
+window.App ||= {}
+
+class App.SocialBase
   constructor: (@$container, @settings) ->
     if @settings.selectors[@type]
       @$selector = @$container.find(@settings.selectors[@type])
@@ -13,7 +15,7 @@ class SocialBase
 
   initClick: -> throw Error 'unimplemented method'
 
-class SocialOk extends SocialBase
+class App.SocialOk extends App.SocialBase
   type: 'ok'
 
   constructor: ($container, settings) ->
@@ -34,7 +36,7 @@ class SocialOk extends SocialBase
       title = encodeURIComponent document.title
       open "http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
     
-class SocialGp extends SocialBase
+class App.SocialGp extends App.SocialBase
   type: 'gp'
 
   constructor: ($container, settings) ->
@@ -55,7 +57,7 @@ class SocialGp extends SocialBase
       e.preventDefault()
       open "https://plus.google.com/share?url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
-class SocialTw extends SocialBase
+class App.SocialTw extends App.SocialBase
   type: 'tw'
 
   constructor: ($container, settings) ->
@@ -75,7 +77,7 @@ class SocialTw extends SocialBase
       title = encodeURIComponent document.title
       open "https://twitter.com/intent/tweet?text=#{title}&url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
-class SocialFb extends SocialBase
+class App.SocialFb extends App.SocialBase
   type: 'fb'
 
   constructor: ($container, settings) ->
@@ -98,7 +100,7 @@ class SocialFb extends SocialBase
       params = "s=100&p[url]=#{@url}&p[title]=#{title}&p[summary]=#{summary}&p[images][0]=#{image}"
       open "http://www.facebook.com/sharer.php?m2w&#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
-class SocialVk extends SocialBase
+class App.SocialVk extends App.SocialBase
   type: 'vk'
 
   constructor: ($container, settings) ->
