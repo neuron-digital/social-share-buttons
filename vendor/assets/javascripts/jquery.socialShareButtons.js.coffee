@@ -11,7 +11,7 @@ $ ->
         fbSelector: '.js-fb'
         gpSelector: '.js-gp'
         okSelector: '.js-ok'
-        containerSelector: '.post-likes'
+        containerSelector: '.socials-share-buttons-container'
         url: location.href
         isInitScroller: false
       , options
@@ -118,14 +118,13 @@ $ ->
         open "http://www.facebook.com/sharer.php?m2w&#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
   class SocialVk extends SocialBase
+    regexVk = /VK.Share.count\(\d+, (\d+)\);/
     getCount: ->
-      window.VK ||= {}
-      window.VK.Share = count: (idx, number) =>
-        @$selector.parent().find('span').text number
-
       $.ajax
         url: "http://vk.com/share.php?act=count&index=1&url=#{@url}"
-        dataType: 'jsonp'
+        success: (data) =>
+          result = parseInt data.match(regexVk)?[1]
+          @$selector.parent().find('span').text result
 
     initClick: ->
       @$selector.on 'click', (e) =>
