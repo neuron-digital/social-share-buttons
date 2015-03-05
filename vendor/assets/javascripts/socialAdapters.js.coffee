@@ -24,17 +24,17 @@ class App.SocialOk extends App.SocialBase
   getCount: ->
     window.ODKL ||= {}
     window.ODKL.updateCount = (idx, number) =>
-      @$selector.parent().find('span').text number
+      @$selectorGlobal.parent().find('span').text number
 
     $.ajax
-      url: "http://www.odnoklassniki.ru/dk?st.cmd=extLike&uid=odklcnt0&ref=#{@url}"
+      url: "http://ok.ru/dk?st.cmd=extLike&uid=odklcnt0&ref=#{@url}"
       dataType: 'jsonp'
 
   initClick: ->
     @$selector.on 'click', (e) =>
       e.preventDefault()
       title = encodeURIComponent document.title
-      open "http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "http://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
     
 class App.SocialGp extends App.SocialBase
   type: 'gp'
