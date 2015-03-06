@@ -21,8 +21,6 @@ $ ->
         isInitScroller: false
       , options
 
-      requests = undefined
-
       @each ->
         $socials = $ @
         $container = $socials.find settings.containerSelector

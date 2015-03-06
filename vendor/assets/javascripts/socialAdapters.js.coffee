@@ -29,12 +29,18 @@ class App.SocialOk extends App.SocialBase
     deferred.then (number) =>
       @$selector.parent().find('span').text number
 
-    window.ODKL ||= {}
-    window.ODKL.updateCount = (idx, number) ->
-      deferred.resolve number
+    unless $.fn.socialShareButtons.requestsOK
+      $.fn.socialShareButtons.requestsOK = []
+
+      window.ODKL ||= {}
+      window.ODKL.updateCount = (idx, number) ->
+        $.fn.socialShareButtons.requestsOK[idx].resolve number
+
+    idx = $.fn.socialShareButtons.requestsOK.length
+    $.fn.socialShareButtons.requestsOK.push deferred
 
     $.ajax
-      url: "http://ok.ru/dk?st.cmd=extLike&uid=odklcnt0&ref=#{@url}"
+      url: "http://ok.ru/dk?st.cmd=extLike&uid=#{idx}&ref=#{@url}"
       dataType: 'jsonp'
 
   initClick: ->
@@ -100,7 +106,7 @@ class App.SocialFb extends App.SocialBase
     @$selector.on 'click', (e) =>
       e.preventDefault()
       params = "s=100&p[url]=#{@url}&p[title]=#{@title}&p[summary]=#{@description}&p[images][0]=#{@image}"
-      open "http://www.facebook.com/sharer.php?m2w&#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "https://www.facebook.com/sharer.php?m2w&#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
 class App.SocialVk extends App.SocialBase
   type: 'vk'
@@ -110,26 +116,25 @@ class App.SocialVk extends App.SocialBase
 
   getCount: ->
     deferred = $.Deferred()
-    deferred.then (number) =>
+    deferred.done (number) =>
       @$selector.parent().find('span').text number
 
-    unless requests
-      requests = []
+    unless $.fn.socialShareButtons.requestsVK
+      $.fn.socialShareButtons.requestsVK = []
 
       window.VK ||= {}
-      VK.Share ||= {}
-      VK.Share.count = (index, number) ->
-        requests[index].resolve number
+      VK.Share = count: (idx, number) ->
+        $.fn.socialShareButtons.requestsVK[idx].resolve number
 
-    index = requests.length
-    requests.push deferred
+    idx = $.fn.socialShareButtons.requestsVK.length
+    $.fn.socialShareButtons.requestsVK.push deferred
 
     $.ajax
-      url: "http://vk.com/share.php?act=count&url=#{@url}&index=#{index}"
+      url: "https://vk.com/share.php?act=count&url=#{@url}&index=#{idx}"
       dataType: 'jsonp'
 
   initClick: ->
     @$selector.on 'click', (e) =>
       e.preventDefault()
       title = encodeURIComponent @settings.title
-      open "http://vk.com/share.php?url=#{@url}&title=#{@title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "https://vk.com/share.php?url=#{@url}&title=#{@title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
