@@ -15,8 +15,13 @@ $ ->
           ok: '.js-ok'
         containerSelector: '.socials-share-buttons-container'
         url: location.href
+        title: document.title
+        image: $("meta[property='og:image']").attr("content")
+        description: $("meta[name='description']").attr("content")
         isInitScroller: false
       , options
+
+      requests = undefined
 
       @each ->
         $socials = $ @
