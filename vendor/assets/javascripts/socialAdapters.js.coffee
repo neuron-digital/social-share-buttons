@@ -4,9 +4,8 @@ class App.SocialBase
   constructor: (@$container, @settings) ->
     if @settings.selectors[@type]
       @$selector = @$container.find(@settings.selectors[@type])
-      @$selectorGlobal = $(@settings.selectors[@type])
 
-    if @$selector.length and @$selectorGlobal.length
+    if @$selector.length
       @url = @settings.url
       @getCount()
       @initClick()
@@ -22,9 +21,13 @@ class App.SocialOk extends App.SocialBase
     super $container, settings, @type
 
   getCount: ->
+    deferred = $.Deferred()
+    deferred.then (number) =>
+      @$selector.parent().find('span').text number
+
     window.ODKL ||= {}
-    window.ODKL.updateCount = (idx, number) =>
-      @$selectorGlobal.parent().find('span').text number
+    window.ODKL.updateCount = (idx, number) ->
+      deferred.resolve number
 
     $.ajax
       url: "http://ok.ru/dk?st.cmd=extLike&uid=odklcnt0&ref=#{@url}"
@@ -33,7 +36,7 @@ class App.SocialOk extends App.SocialBase
   initClick: ->
     @$selector.on 'click', (e) =>
       e.preventDefault()
-      title = encodeURIComponent document.title
+      title = @settings.title ? encodeURIComponent(document.title)
       open "http://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
     
 class App.SocialGp extends App.SocialBase
@@ -74,7 +77,7 @@ class App.SocialTw extends App.SocialBase
   initClick: ->
     @$selector.on 'click', (e) =>
       e.preventDefault()
-      title = encodeURIComponent document.title
+      title = @settings.title ? encodeURIComponent(document.title)
       open "https://twitter.com/intent/tweet?text=#{title}&url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
 class App.SocialFb extends App.SocialBase
@@ -94,9 +97,9 @@ class App.SocialFb extends App.SocialBase
   initClick: ->
     @$selector.on 'click', (e) =>
       e.preventDefault()
-      summary = encodeURIComponent $("meta[property='og:description']").attr("content")
-      image = encodeURIComponent $("meta[property='og:image']").attr("content")
-      title = encodeURIComponent document.title
+      summary = @settings.description ? encodeURIComponent($("meta[property='og:description']").attr("content"))
+      image = @settings.image ? encodeURIComponent($("meta[property='og:image']").attr("content"))
+      title = @settings.title ? encodeURIComponent(document.title)
       params = "s=100&p[url]=#{@url}&p[title]=#{title}&p[summary]=#{summary}&p[images][0]=#{image}"
       open "http://www.facebook.com/sharer.php?m2w&#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
@@ -107,10 +110,14 @@ class App.SocialVk extends App.SocialBase
     super $container, settings, @type
 
   getCount: ->
+    deferred = $.Deferred()
+    deferred.then (number) =>
+      @$selector.parent().find('span').text number
+
     window.VK ||= {}
     VK.Share ||= {}
-    VK.Share.count = (index, number) =>
-      @$selectorGlobal.parent().find('span').text number
+    VK.Share.count = (index, number) ->
+      deferred.resolve number
 
     $.ajax
       url: "http://vk.com/share.php?act=count&index=1&url=#{@url}"
@@ -119,5 +126,5 @@ class App.SocialVk extends App.SocialBase
   initClick: ->
     @$selector.on 'click', (e) =>
       e.preventDefault()
-      title = encodeURIComponent document.title
+      title = @settings.title ? encodeURIComponent(document.title)
       open "http://vk.com/share.php?url=#{@url}&title=#{title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
