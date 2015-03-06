@@ -5,6 +5,7 @@ Plugin loads the number of the sharing specified page and allows you to share it
 
 ## Demo
 http://rusnovosti.ru/posts/361197
+http://lifenews.ru/news/146165
 
 ## Install
 
@@ -27,28 +28,42 @@ $('.socials').socialShareButtons()
 
 Default plugin settings
 ```coffee
-twSelector: '.js-tw'
-vkSelector: '.js-vk'
-fbSelector: '.js-fb'
-containerSelector: '.post-likes'
+selectors:
+  tw: '.js-tw'
+  fb: '.js-fb'
+  gp: '.js-gp'
+  vk: '.js-vk'
+  ok: '.js-ok'
+containerSelector: '.socials-share-buttons-container'
 url: location.href
+title: document.title
+image: $("meta[property='og:image']").attr("content")
+description: $("meta[name='description']").attr("content")
 isInitScroller: false
 ```
 
 Example of DOM
 ```haml
 .socials
-  .post-likes
+  .socials-share-buttons-container
     .item
-      %a.vk.js-vk{"data-text" => "Нравится", href: "#", rel: "noindex"}
+      %a.vk.js-vk{"data-text" => "Нравится", href: "#"}
         %i
       %span 0
     .item
-      %a.tw.js-tw{"data-text" => "Твитнуть", href: "#", rel: "noindex"}
+      %a.tw.js-tw{"data-text" => "Твитнуть", href: "#"}
         %i
       %span 0
     .item
-      %a.fb.js-fb{"data-text" => "Поделиться", href: "#", rel: "noindex"}
+      %a.fb.js-fb{"data-text" => "Поделиться", href: "#"}
+        %i
+      %span 0
+    .item
+      %a.gp.js-gp{"data-text" => "Google+", href: "#"}
+        %i
+      %span 0
+    .item
+      %a.ok.js-ok{"data-text" => "Поделиться", href: "#"}
         %i
       %span 0
 ```
