@@ -17,5 +17,4 @@ Gem::Specification.new do |s|
   s.files = Dir["{lib,vendor}/**/*"] + ["LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails"
-  s.add_dependency "jquery-rails"
 end
