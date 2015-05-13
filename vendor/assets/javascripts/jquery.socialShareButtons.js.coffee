@@ -14,7 +14,7 @@ $ ->
           ok: '.js-ok'
         containerSelector: '.socials-share-buttons-container'
         url: location.href
-        title: document.title
+        title: $("meta[property='og:title']").attr("content") or document.title
         image: $("meta[property='og:image']").attr("content")
         description: $("meta[name='description']").attr("content")
         isInitScroller: false
