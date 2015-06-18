@@ -18,6 +18,8 @@ $ ->
         image: $("meta[property='og:image']").attr("content")
         description: $("meta[name='description']").attr("content")
         isInitScroller: false
+        scrollerOffset: ($socials) ->
+          $socials.offset().top + $socials.height()
       , options
 
       @each ->
@@ -31,16 +33,16 @@ $ ->
           new App.SocialOk $container, settings
 
           if settings.isInitScroller
-            initScroller $socials, $container
+            initScroller $socials, $container, settings
 
-  initScroller = ($socials, $container) ->
+  initScroller = ($socials, $container, settings) ->
     checkSocialScroll = ->
       if $(window).scrollTop() > offset
         $container.addClass 'float'
       else
         $container.removeClass 'float'
 
-    offset = $socials.offset().top + $socials.height()
+    offset = settings.scrollerOffset($socials)
 
     $(document).on 'scroll', checkSocialScroll
 
