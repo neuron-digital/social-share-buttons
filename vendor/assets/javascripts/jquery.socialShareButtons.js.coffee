@@ -36,17 +36,13 @@ $ ->
             initScroller $socials, $container, settings
 
   initScroller = ($socials, $container, settings) ->
-    checkSocialScroll = ->
-      if $(window).scrollTop() > offset
+    $(document).on 'scroll', ->
+      if $(window).scrollTop() > settings.scrollerOffset($socials)
         $container.addClass 'float'
       else
         $container.removeClass 'float'
 
-    offset = settings.scrollerOffset($socials)
-
-    $(document).on 'scroll', checkSocialScroll
-
-    checkSocialScroll()
+    $(document).trigger('scroll')
 
   $.fn.socialShareButtons = (method) ->
     if methods[method] then methods[method].apply @, Array::slice.call(arguments, 1)
