@@ -50,6 +50,7 @@ $ ->
           vk: '.js-vk'
           ok: '.js-ok'
         containerSelector: '.socials-share-buttons-container'
+      , options
 
       $(document).off ".#{PLUGIN_NAME}"
 
