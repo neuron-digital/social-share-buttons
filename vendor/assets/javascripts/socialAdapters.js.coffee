@@ -1,6 +1,8 @@
 window.App ||= {}
 
 class App.SocialBase
+  PLUGIN_NAME: 'socialShareButtons'
+
   constructor: (@$container, @settings) ->
     if @settings.selectors[@type]
       @$selector = @$container.find(@settings.selectors[@type])
@@ -44,10 +46,10 @@ class App.SocialOk extends App.SocialBase
       dataType: 'jsonp'
 
   initClick: ->
-    @$selector.on 'click', (e) =>
+    @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       open "http://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
-    
+
 class App.SocialGp extends App.SocialBase
   type: 'gp'
 
@@ -65,7 +67,7 @@ class App.SocialGp extends App.SocialBase
       @$selector.parent().find('span').text result
 
   initClick: ->
-    @$selector.on 'click', (e) =>
+    @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       open "https://plus.google.com/share?url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
@@ -84,7 +86,7 @@ class App.SocialTw extends App.SocialBase
         @$selector.parent().find("span").text result
 
   initClick: ->
-    @$selector.on 'click', (e) =>
+    @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       open "https://twitter.com/intent/tweet?text=#{@title}&url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
@@ -103,7 +105,7 @@ class App.SocialFb extends App.SocialBase
         @$selector.parent().find("span").text result
 
   initClick: ->
-    @$selector.on 'click', (e) =>
+    @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       params = "s=100&p[url]=#{@url}&p[title]=#{@title}&p[summary]=#{@description}&p[images][0]=#{@image}"
       open "https://www.facebook.com/sharer.php?m2w&#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
@@ -134,7 +136,7 @@ class App.SocialVk extends App.SocialBase
       dataType: 'jsonp'
 
   initClick: ->
-    @$selector.on 'click', (e) =>
+    @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       title = encodeURIComponent @settings.title
       open "https://vk.com/share.php?url=#{@url}&title=#{@title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"

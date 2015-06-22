@@ -32,17 +32,36 @@ $ ->
           new App.SocialGp $container, settings
           new App.SocialOk $container, settings
 
-          if settings.isInitScroller
-            initScroller $socials, $container, settings
+        if settings.isInitScroller
+          $(document).on "scroll.#{PLUGIN_NAME}", ->
+            if $(window).scrollTop() > settings.scrollerOffset($socials)
+              $container.addClass 'float'
+            else
+              $container.removeClass 'float'
 
-  initScroller = ($socials, $container, settings) ->
-    $(document).on 'scroll', ->
-      if $(window).scrollTop() > settings.scrollerOffset($socials)
-        $container.addClass 'float'
-      else
+          $(document).trigger('scroll')
+
+    destroy: (options) ->
+      settings = $.extend true,
+        selectors:
+          tw: '.js-tw'
+          fb: '.js-fb'
+          gp: '.js-gp'
+          vk: '.js-vk'
+          ok: '.js-ok'
+        containerSelector: '.socials-share-buttons-container'
+
+      $(document).off ".#{PLUGIN_NAME}"
+
+      @each ->
+        $socials = $ @
+        $container = $socials.find settings.containerSelector
+
         $container.removeClass 'float'
 
-    $(document).trigger('scroll')
+        for _, selector of settings.selectors
+          $selector = $container.find(selector)
+          $selector.off ".#{PLUGIN_NAME}"
 
   $.fn.socialShareButtons = (method) ->
     if methods[method] then methods[method].apply @, Array::slice.call(arguments, 1)
