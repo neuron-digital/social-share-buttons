@@ -13,7 +13,8 @@ class App.SocialBase
       @description = encodeURIComponent @settings.description
       @image = encodeURIComponent @settings.image
 
-      @getCount()
+      @getCount() if @$selector.parent().find('span').length
+
       @initClick()
 
   getCount: -> throw Error 'unimplemented method'
