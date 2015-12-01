@@ -8,7 +8,7 @@ class App.SocialBase
       @$selector = @$container.find(@settings.selectors[@type])
 
     if @$selector.length
-      @url = @settings.url
+      @url = encodeURIComponent @settings.url
       @title = encodeURIComponent @settings.title
       @description = encodeURIComponent @settings.description
       @image = encodeURIComponent @settings.image
@@ -139,5 +139,5 @@ class App.SocialVk extends App.SocialBase
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
-      title = encodeURIComponent @settings.title
-      open "https://vk.com/share.php?url=#{@url}&title=#{@title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      params = "url=#{@url}&title=#{@title}&description=#{@description}&image=#{@image}&noparse=true"
+      open "https://vk.com/share.php?#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
