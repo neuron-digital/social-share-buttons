@@ -17,6 +17,7 @@ $ ->
         title: $("meta[property='og:title']").attr("content") or document.title
         image: $("meta[property='og:image']").attr("content")
         description: $("meta[name='description']").attr("content")
+        fbAppId: $("meta[property='fb:app_id']").attr("content")
         isInitScroller: false
         scrollerOffset: ($socials) ->
           $socials.offset().top + $socials.height()

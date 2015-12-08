@@ -108,8 +108,11 @@ class App.SocialFb extends App.SocialBase
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
-      params = "s=100&p[url]=#{@url}&p[title]=#{@title}&p[summary]=#{@description}&p[images][0]=#{@image}"
-      open "https://www.facebook.com/sharer.php?m2w&#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+
+      throw new Error("fbAppId is not defined") if not @settings.fbAppId
+
+      params = "app_id=#{@settings.fbAppId}&display=popup&redirect_uri=#{@url}&link=#{@url}&caption=#{@title}&description=#{@description}&picture=#{@image}"
+      open "https://www.facebook.com/dialog/feed?#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
 
 class App.SocialVk extends App.SocialBase
   type: 'vk'
