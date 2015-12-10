@@ -12,6 +12,12 @@ $ ->
           gp: '.js-gp'
           vk: '.js-vk'
           ok: '.js-ok'
+        selectorsCounter:
+          tw: '.js-tw-counter'
+          fb: '.js-fb-counter'
+          gp: '.js-gp-counter'
+          vk: '.js-vk-counter'
+          ok: '.js-ok-counter'
         containerSelector: '.socials-share-buttons-container'
         url: location.href
         title: $("meta[property='og:title']").attr("content") or document.title

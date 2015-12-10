@@ -6,6 +6,7 @@ class App.SocialBase
   constructor: (@$container, @settings) ->
     if @settings.selectors[@type]
       @$selector = @$container.find(@settings.selectors[@type])
+      @$selectorCounter = @$container.find(@settings.selectorsCounter[@type])
 
     if @$selector.length
       @url = encodeURIComponent @settings.url
@@ -13,13 +14,14 @@ class App.SocialBase
       @description = encodeURIComponent @settings.description
       @image = encodeURIComponent @settings.image
 
-      @getCount() if @$selector.parent().find('span').length
+      if @$selectorCounter.length
+        @getCount()
 
       @initClick()
 
-  getCount: -> throw Error 'unimplemented method'
+  getCount: -> throw new Error('Unimplemented method')
 
-  initClick: -> throw Error 'unimplemented method'
+  initClick: -> throw new Error('Unimplemented method')
 
 class App.SocialOk extends App.SocialBase
   type: 'ok'
@@ -30,7 +32,7 @@ class App.SocialOk extends App.SocialBase
   getCount: ->
     deferred = $.Deferred()
     deferred.then (number) =>
-      @$selector.parent().find('span').text number
+      @$selectorCounter.text number
 
     unless $.fn.socialShareButtons.requestsOK
       $.fn.socialShareButtons.requestsOK = []
@@ -65,7 +67,7 @@ class App.SocialGp extends App.SocialBase
 
     $.getScript "http://share.yandex.ru/gpp.xml?url=#{@url}", =>
       result = gplusShares or 0
-      @$selector.parent().find('span').text result
+      @$selectorCounter.text result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -84,7 +86,7 @@ class App.SocialTw extends App.SocialBase
       dataType: 'jsonp'
       success: (data) =>
         result = data.count or 0
-        @$selector.parent().find("span").text result
+        @$selectorCounter.text result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -103,7 +105,7 @@ class App.SocialFb extends App.SocialBase
       dataType: 'jsonp'
       success: (data) =>
         result = data[0]?.share_count or 0
-        @$selector.parent().find("span").text result
+        @$selectorCounter.text result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -123,7 +125,7 @@ class App.SocialVk extends App.SocialBase
   getCount: ->
     deferred = $.Deferred()
     deferred.done (number) =>
-      @$selector.parent().find('span').text number
+      @$selectorCounter.text number
 
     unless $.fn.socialShareButtons.requestsVK
       $.fn.socialShareButtons.requestsVK = []
