@@ -60,14 +60,12 @@ class App.SocialGp extends App.SocialBase
     super $container, settings, @type
 
   getCount: ->
-    window.services ||= {}
-    window.services.gplus ||= {}
-    window.services.gplus.cb = (number) ->
-      window.gplusShares = number
-
-    $.getScript "http://share.yandex.ru/gpp.xml?url=#{@url}", =>
-      result = gplusShares or 0
-      @$selectorCounter.text result
+    $.ajax
+      url: "http://share.yandex.ru/gpp.xml?url=#{@url}"
+      dataType: 'json'
+      success: (data) =>
+        result = data or 0
+        @$selectorCounter.text result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -81,12 +79,8 @@ class App.SocialTw extends App.SocialBase
     super $container, settings, @type
 
   getCount: ->
-    $.ajax
-      url: "https://cdn.api.twitter.com/1/urls/count.json?url=#{@url}"
-      dataType: 'jsonp'
-      success: (data) =>
-        result = data.count or 0
-        @$selectorCounter.text result
+    # Твиттер удалили счётчики
+    0
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
