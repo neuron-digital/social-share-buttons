@@ -18,6 +18,12 @@ $ ->
           gp: '.js-gp-counter'
           vk: '.js-vk-counter'
           ok: '.js-ok-counter'
+        callbacksCounter:
+          tw: (count) ->
+          fb: (count) ->
+          gp: (count) ->
+          vk: (count) ->
+          ok: (count) ->
         containerSelector: '.socials-share-buttons-container'
         url: location.href
         title: $("meta[property='og:title']").attr("content") or document.title

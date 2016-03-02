@@ -7,6 +7,7 @@ class App.SocialBase
     if @settings.selectors[@type]
       @$selector = @$container.find(@settings.selectors[@type])
       @$selectorCounter = @$container.find(@settings.selectorsCounter[@type])
+      @callbackCounter = @settings.callbacksCounter[@type]
 
     if @$selector.length
       @url = encodeURIComponent @settings.url
@@ -33,6 +34,7 @@ class App.SocialOk extends App.SocialBase
     deferred = $.Deferred()
     deferred.then (number) =>
       @$selectorCounter.text number
+      @callbackCounter number
 
     unless $.fn.socialShareButtons.requestsOK
       $.fn.socialShareButtons.requestsOK = []
@@ -67,6 +69,7 @@ class App.SocialGp extends App.SocialBase
       success: (data) =>
         result = data or 0
         @$selectorCounter.text result
+        @callbackCounter result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -103,6 +106,7 @@ class App.SocialFb extends App.SocialBase
       success: (data) =>
         result = data[0]?.share_count or 0
         @$selectorCounter.text result
+        @callbackCounter result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -126,6 +130,7 @@ class App.SocialVk extends App.SocialBase
     deferred = $.Deferred()
     deferred.done (number) =>
       @$selectorCounter.text number
+      @callbackCounter number
 
     unless $.fn.socialShareButtons.requestsVK
       $.fn.socialShareButtons.requestsVK = []

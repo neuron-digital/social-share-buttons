@@ -20,6 +20,13 @@
             vk: '.js-vk-counter',
             ok: '.js-ok-counter'
           },
+          callbacksCounter: {
+            tw: function(count) {},
+            fb: function(count) {},
+            gp: function(count) {},
+            vk: function(count) {},
+            ok: function(count) {}
+          },
           containerSelector: '.socials-share-buttons-container',
           url: location.href,
           title: $("meta[property='og:title']").attr("content") || document.title,
@@ -111,6 +118,7 @@
       if (this.settings.selectors[this.type]) {
         this.$selector = this.$container.find(this.settings.selectors[this.type]);
         this.$selectorCounter = this.$container.find(this.settings.selectorsCounter[this.type]);
+        this.callbackCounter = this.settings.callbacksCounter[this.type];
       }
       if (this.$selector.length) {
         this.url = encodeURIComponent(this.settings.url);
@@ -150,7 +158,8 @@
       deferred = $.Deferred();
       deferred.then((function(_this) {
         return function(number) {
-          return _this.$selectorCounter.text(number);
+          _this.$selectorCounter.text(number);
+          return _this.callbackCounter(number);
         };
       })(this));
       if (!$.fn.socialShareButtons.requestsOK) {
@@ -200,7 +209,8 @@
           return function(data) {
             var result;
             result = data || 0;
-            return _this.$selectorCounter.text(result);
+            _this.$selectorCounter.text(result);
+            return _this.callbackCounter(result);
           };
         })(this)
       });
@@ -266,7 +276,8 @@
           return function(data) {
             var ref, result;
             result = ((ref = data[0]) != null ? ref.share_count : void 0) || 0;
-            return _this.$selectorCounter.text(result);
+            _this.$selectorCounter.text(result);
+            return _this.callbackCounter(result);
           };
         })(this)
       });
@@ -306,7 +317,8 @@
       deferred = $.Deferred();
       deferred.done((function(_this) {
         return function(number) {
-          return _this.$selectorCounter.text(number);
+          _this.$selectorCounter.text(number);
+          return _this.callbackCounter(number);
         };
       })(this));
       if (!$.fn.socialShareButtons.requestsVK) {
