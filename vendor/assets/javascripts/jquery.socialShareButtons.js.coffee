@@ -1,4 +1,4 @@
-#= require socialAdapters
+#=require socialAdapters.js
 
 $ ->
   PLUGIN_NAME = 'socialShareButtons'

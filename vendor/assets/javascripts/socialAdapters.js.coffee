@@ -51,7 +51,8 @@ class App.SocialOk extends App.SocialBase
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
-      open "http://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "http://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", winParams
 
 class App.SocialGp extends App.SocialBase
   type: 'gp'
@@ -70,7 +71,8 @@ class App.SocialGp extends App.SocialBase
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
-      open "https://plus.google.com/share?url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "https://plus.google.com/share?url=#{@url}", "_blank", winParams
 
 class App.SocialTw extends App.SocialBase
   type: 'tw'
@@ -85,7 +87,8 @@ class App.SocialTw extends App.SocialBase
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
-      open "https://twitter.com/intent/tweet?text=#{@title}&url=#{@url}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "https://twitter.com/intent/tweet?text=#{@title}&url=#{@url}", "_blank", winParams
 
 class App.SocialFb extends App.SocialBase
   type: 'fb'
@@ -107,8 +110,11 @@ class App.SocialFb extends App.SocialBase
 
       throw new Error("fbAppId is not defined") if not @settings.fbAppId
 
-      params = "app_id=#{@settings.fbAppId}&display=popup&redirect_uri=#{@url}&link=#{@url}&name=#{@title}&description=#{@description}&picture=#{@image}"
-      open "https://www.facebook.com/dialog/feed?#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      params = "app_id=#{@settings.fbAppId}&display=popup&redirect_uri=#{@url}"
+      params = "#{params}&link=#{@url}&name=#{@title}&description=#{@description}&picture=#{@image}"
+
+      winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "https://www.facebook.com/dialog/feed?#{params}", "_blank", winParams
 
 class App.SocialVk extends App.SocialBase
   type: 'vk'
@@ -139,4 +145,6 @@ class App.SocialVk extends App.SocialBase
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       params = "url=#{@url}&title=#{@title}&description=#{@description}&image=#{@image}&noparse=true"
-      open "https://vk.com/share.php?#{params}", "_blank", "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+
+      winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "https://vk.com/share.php?#{params}", "_blank", winParams
