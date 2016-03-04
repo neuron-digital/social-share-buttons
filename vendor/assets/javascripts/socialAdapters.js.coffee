@@ -47,14 +47,14 @@ class App.SocialOk extends App.SocialBase
     $.fn.socialShareButtons.requestsOK.push deferred
 
     $.ajax
-      url: "http://ok.ru/dk?st.cmd=extLike&uid=#{idx}&ref=#{@url}"
+      url: "https://connect.ok.ru/dk?st.cmd=extLike&uid=#{idx}&ref=#{@url}"
       dataType: 'jsonp'
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
-      open "http://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", winParams
+      open "https://connect.ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", winParams
 
 class App.SocialGp extends App.SocialBase
   type: 'gp'
@@ -64,7 +64,7 @@ class App.SocialGp extends App.SocialBase
 
   getCount: ->
     $.ajax
-      url: "http://share.yandex.ru/gpp.xml?url=#{@url}"
+      url: "https://share.yandex.ru/gpp.xml?url=#{@url}"
       dataType: 'json'
       success: (data) =>
         result = data or 0
