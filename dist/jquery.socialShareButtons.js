@@ -172,7 +172,7 @@
       idx = $.fn.socialShareButtons.requestsOK.length;
       $.fn.socialShareButtons.requestsOK.push(deferred);
       return $.ajax({
-        url: "http://ok.ru/dk?st.cmd=extLike&uid=" + idx + "&ref=" + this.url,
+        url: "https://connect.ok.ru/dk?st.cmd=extLike&uid=" + idx + "&ref=" + this.url,
         dataType: 'jsonp'
       });
     };
@@ -183,7 +183,7 @@
           var winParams;
           e.preventDefault();
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          return open("http://ok.ru/dk?st.cmd=addShare&st._surl=" + _this.url + "&title=" + _this.title, "_blank", winParams);
+          return open("https://connect.ok.ru/dk?st.cmd=addShare&st._surl=" + _this.url + "&title=" + _this.title, "_blank", winParams);
         };
       })(this));
     };
@@ -203,7 +203,7 @@
 
     SocialGp.prototype.getCount = function() {
       return $.ajax({
-        url: "http://share.yandex.ru/gpp.xml?url=" + this.url,
+        url: "https://share.yandex.ru/gpp.xml?url=" + this.url,
         dataType: 'json',
         success: (function(_this) {
           return function(data) {
