@@ -54,7 +54,7 @@ class App.SocialOk extends App.SocialBase
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
-      open "https://connect.ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", winParams
+      open "https://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", winParams
 
 class App.SocialGp extends App.SocialBase
   type: 'gp'

@@ -183,7 +183,7 @@
           var winParams;
           e.preventDefault();
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          return open("https://connect.ok.ru/dk?st.cmd=addShare&st._surl=" + _this.url + "&title=" + _this.title, "_blank", winParams);
+          return open("https://ok.ru/dk?st.cmd=addShare&st._surl=" + _this.url + "&title=" + _this.title, "_blank", winParams);
         };
       })(this));
     };
