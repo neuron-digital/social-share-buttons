@@ -211,7 +211,7 @@
             var result;
             result = data || 0;
             _this.$selectorCounter.text(result);
-            return _this.callbackCounter(_this.type, number);
+            return _this.callbackCounter(_this.type, result);
           };
         })(this)
       });
@@ -280,7 +280,7 @@
             var ref, result;
             result = ((ref = data[0]) != null ? ref.share_count : void 0) || 0;
             _this.$selectorCounter.text(result);
-            return _this.callbackCounter(_this.type, number);
+            return _this.callbackCounter(_this.type, result);
           };
         })(this)
       });

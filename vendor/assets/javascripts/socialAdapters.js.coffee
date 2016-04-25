@@ -72,7 +72,7 @@ class App.SocialGp extends App.SocialBase
       success: (data) =>
         result = data or 0
         @$selectorCounter.text result
-        @callbackCounter @type, number
+        @callbackCounter @type, result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -113,7 +113,7 @@ class App.SocialFb extends App.SocialBase
       success: (data) =>
         result = data[0]?.share_count or 0
         @$selectorCounter.text result
-        @callbackCounter @type, number
+        @callbackCounter @type, result
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
