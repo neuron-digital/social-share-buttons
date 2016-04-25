@@ -1,6 +1,6 @@
 {
   "name": "social_share_buttons",
-  "version": "1.0.8",
+  "version": "2.0.0",
   "description": "Plugin loads the number of the sharing specified page and allows you to share it",
   "main": "dist/jquery.socialShareButtons.js",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Go-Promo/social-share-buttons#readme",
   "devDependencies": {
+    "bower": "^1.7.9",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-coffee": "^2.3.1",

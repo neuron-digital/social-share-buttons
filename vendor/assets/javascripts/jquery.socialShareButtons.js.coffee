@@ -1,5 +1,7 @@
 #=require socialAdapters.js
 
+throw new Error("jQuery isn't defined") if not jQuery?
+
 $ ->
   PLUGIN_NAME = 'socialShareButtons'
 
@@ -18,12 +20,8 @@ $ ->
           gp: '.js-gp-counter'
           vk: '.js-vk-counter'
           ok: '.js-ok-counter'
-        callbacksCounter:
-          tw: (count) ->
-          fb: (count) ->
-          gp: (count) ->
-          vk: (count) ->
-          ok: (count) ->
+        callbackCounter: (type, count) ->
+        callbackClick: (type) ->
         containerSelector: '.socials-share-buttons-container'
         url: location.href
         title: $("meta[property='og:title']").attr("content") or document.title

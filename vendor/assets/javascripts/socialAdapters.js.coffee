@@ -7,7 +7,8 @@ class App.SocialBase
     if @settings.selectors[@type]
       @$selector = @$container.find(@settings.selectors[@type])
       @$selectorCounter = @$container.find(@settings.selectorsCounter[@type])
-      @callbackCounter = @settings.callbacksCounter[@type]
+      @callbackCounter = @settings.callbackCounter
+      @callbackClick = @settings.callbackClick
 
     if @$selector.length
       @url = encodeURIComponent @settings.url
@@ -34,7 +35,7 @@ class App.SocialOk extends App.SocialBase
     deferred = $.Deferred()
     deferred.then (number) =>
       @$selectorCounter.text number
-      @callbackCounter number
+      @callbackCounter @type, number
 
     unless $.fn.socialShareButtons.requestsOK
       $.fn.socialShareButtons.requestsOK = []
@@ -56,6 +57,8 @@ class App.SocialOk extends App.SocialBase
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
       open "https://ok.ru/dk?st.cmd=addShare&st._surl=#{@url}&title=#{@title}", "_blank", winParams
 
+      @callbackClick @type
+
 class App.SocialGp extends App.SocialBase
   type: 'gp'
 
@@ -69,13 +72,15 @@ class App.SocialGp extends App.SocialBase
       success: (data) =>
         result = data or 0
         @$selectorCounter.text result
-        @callbackCounter result
+        @callbackCounter @type, number
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
       open "https://plus.google.com/share?url=#{@url}", "_blank", winParams
+
+      @callbackClick @type
 
 class App.SocialTw extends App.SocialBase
   type: 'tw'
@@ -93,6 +98,8 @@ class App.SocialTw extends App.SocialBase
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
       open "https://twitter.com/intent/tweet?text=#{@title}&url=#{@url}", "_blank", winParams
 
+      @callbackClick @type
+
 class App.SocialFb extends App.SocialBase
   type: 'fb'
 
@@ -106,7 +113,7 @@ class App.SocialFb extends App.SocialBase
       success: (data) =>
         result = data[0]?.share_count or 0
         @$selectorCounter.text result
-        @callbackCounter result
+        @callbackCounter @type, number
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
@@ -120,6 +127,8 @@ class App.SocialFb extends App.SocialBase
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
       open "https://www.facebook.com/dialog/feed?#{params}", "_blank", winParams
 
+      @callbackClick @type
+
 class App.SocialVk extends App.SocialBase
   type: 'vk'
 
@@ -130,7 +139,7 @@ class App.SocialVk extends App.SocialBase
     deferred = $.Deferred()
     deferred.done (number) =>
       @$selectorCounter.text number
-      @callbackCounter number
+      @callbackCounter @type, number
 
     unless $.fn.socialShareButtons.requestsVK
       $.fn.socialShareButtons.requestsVK = []
@@ -153,3 +162,5 @@ class App.SocialVk extends App.SocialBase
 
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
       open "https://vk.com/share.php?#{params}", "_blank", winParams
+
+      @callbackClick @type

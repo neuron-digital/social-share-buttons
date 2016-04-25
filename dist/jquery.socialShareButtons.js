@@ -1,4 +1,8 @@
 (function() {
+  if (typeof jQuery === "undefined" || jQuery === null) {
+    throw new Error("jQuery isn't defined");
+  }
+
   $(function() {
     var PLUGIN_NAME, methods;
     PLUGIN_NAME = 'socialShareButtons';
@@ -20,13 +24,8 @@
             vk: '.js-vk-counter',
             ok: '.js-ok-counter'
           },
-          callbacksCounter: {
-            tw: function(count) {},
-            fb: function(count) {},
-            gp: function(count) {},
-            vk: function(count) {},
-            ok: function(count) {}
-          },
+          callbackCounter: function(type, count) {},
+          callbackClick: function(type) {},
           containerSelector: '.socials-share-buttons-container',
           url: location.href,
           title: $("meta[property='og:title']").attr("content") || document.title,
@@ -118,7 +117,8 @@
       if (this.settings.selectors[this.type]) {
         this.$selector = this.$container.find(this.settings.selectors[this.type]);
         this.$selectorCounter = this.$container.find(this.settings.selectorsCounter[this.type]);
-        this.callbackCounter = this.settings.callbacksCounter[this.type];
+        this.callbackCounter = this.settings.callbackCounter;
+        this.callbackClick = this.settings.callbackClick;
       }
       if (this.$selector.length) {
         this.url = encodeURIComponent(this.settings.url);
@@ -159,7 +159,7 @@
       deferred.then((function(_this) {
         return function(number) {
           _this.$selectorCounter.text(number);
-          return _this.callbackCounter(number);
+          return _this.callbackCounter(_this.type, number);
         };
       })(this));
       if (!$.fn.socialShareButtons.requestsOK) {
@@ -183,7 +183,8 @@
           var winParams;
           e.preventDefault();
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          return open("https://ok.ru/dk?st.cmd=addShare&st._surl=" + _this.url + "&title=" + _this.title, "_blank", winParams);
+          open("https://ok.ru/dk?st.cmd=addShare&st._surl=" + _this.url + "&title=" + _this.title, "_blank", winParams);
+          return _this.callbackClick(_this.type);
         };
       })(this));
     };
@@ -210,7 +211,7 @@
             var result;
             result = data || 0;
             _this.$selectorCounter.text(result);
-            return _this.callbackCounter(result);
+            return _this.callbackCounter(_this.type, number);
           };
         })(this)
       });
@@ -222,7 +223,8 @@
           var winParams;
           e.preventDefault();
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          return open("https://plus.google.com/share?url=" + _this.url, "_blank", winParams);
+          open("https://plus.google.com/share?url=" + _this.url, "_blank", winParams);
+          return _this.callbackClick(_this.type);
         };
       })(this));
     };
@@ -250,7 +252,8 @@
           var winParams;
           e.preventDefault();
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          return open("https://twitter.com/intent/tweet?text=" + _this.title + "&url=" + _this.url, "_blank", winParams);
+          open("https://twitter.com/intent/tweet?text=" + _this.title + "&url=" + _this.url, "_blank", winParams);
+          return _this.callbackClick(_this.type);
         };
       })(this));
     };
@@ -277,7 +280,7 @@
             var ref, result;
             result = ((ref = data[0]) != null ? ref.share_count : void 0) || 0;
             _this.$selectorCounter.text(result);
-            return _this.callbackCounter(result);
+            return _this.callbackCounter(_this.type, number);
           };
         })(this)
       });
@@ -294,7 +297,8 @@
           params = "app_id=" + _this.settings.fbAppId + "&display=popup&redirect_uri=" + _this.url;
           params = params + "&link=" + _this.url + "&name=" + _this.title + "&description=" + _this.description + "&picture=" + _this.image;
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          return open("https://www.facebook.com/dialog/feed?" + params, "_blank", winParams);
+          open("https://www.facebook.com/dialog/feed?" + params, "_blank", winParams);
+          return _this.callbackClick(_this.type);
         };
       })(this));
     };
@@ -318,7 +322,7 @@
       deferred.done((function(_this) {
         return function(number) {
           _this.$selectorCounter.text(number);
-          return _this.callbackCounter(number);
+          return _this.callbackCounter(_this.type, number);
         };
       })(this));
       if (!$.fn.socialShareButtons.requestsVK) {
@@ -345,7 +349,8 @@
           e.preventDefault();
           params = "url=" + _this.url + "&title=" + _this.title + "&description=" + _this.description + "&image=" + _this.image + "&noparse=true";
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          return open("https://vk.com/share.php?" + params, "_blank", winParams);
+          open("https://vk.com/share.php?" + params, "_blank", winParams);
+          return _this.callbackClick(_this.type);
         };
       })(this));
     };
