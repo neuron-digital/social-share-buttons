@@ -12,6 +12,7 @@ class App.SocialBase
 
     if @$selector.length
       @url = encodeURIComponent @settings.url
+      @redirectUri = encodeURIComponent "#{@settings.url}#close_window"
       @title = encodeURIComponent @settings.title
       @description = encodeURIComponent @settings.description
       @image = encodeURIComponent @settings.image
@@ -121,7 +122,7 @@ class App.SocialFb extends App.SocialBase
 
       throw new Error("fbAppId is not defined") if not @settings.fbAppId
 
-      params = "app_id=#{@settings.fbAppId}&display=popup&redirect_uri=#{@url}"
+      params = "app_id=#{@settings.fbAppId}&display=popup&redirect_uri=#{@redirectUri}"
       params = "#{params}&link=#{@url}&name=#{@title}&description=#{@description}&picture=#{@image}"
 
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"

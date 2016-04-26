@@ -122,6 +122,7 @@
       }
       if (this.$selector.length) {
         this.url = encodeURIComponent(this.settings.url);
+        this.redirectUri = encodeURIComponent(this.settings.url + "#close_window");
         this.title = encodeURIComponent(this.settings.title);
         this.description = encodeURIComponent(this.settings.description);
         this.image = encodeURIComponent(this.settings.image);
@@ -294,7 +295,7 @@
           if (!_this.settings.fbAppId) {
             throw new Error("fbAppId is not defined");
           }
-          params = "app_id=" + _this.settings.fbAppId + "&display=popup&redirect_uri=" + _this.url;
+          params = "app_id=" + _this.settings.fbAppId + "&display=popup&redirect_uri=" + _this.redirectUri;
           params = params + "&link=" + _this.url + "&name=" + _this.title + "&description=" + _this.description + "&picture=" + _this.image;
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
           open("https://www.facebook.com/dialog/feed?" + params, "_blank", winParams);
