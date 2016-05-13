@@ -3,6 +3,11 @@ window.App ||= {}
 class App.SocialBase
   PLUGIN_NAME: 'socialShareButtons'
 
+  addhttp = (url) ->
+    if !/^(?:f|ht)tps?\:\/\//.test(url)
+      url = 'http://' + url
+    url
+
   constructor: (@$container, @settings) ->
     if @settings.selectors[@type]
       @$selector = @$container.find(@settings.selectors[@type])
@@ -11,7 +16,7 @@ class App.SocialBase
       @callbackClick = @settings.callbackClick
 
     if @$selector.length
-      @url = encodeURIComponent @settings.url
+      @url = encodeURIComponent addhttp(@settings.url)
       @redirectUri = encodeURIComponent "#{@settings.url}#close_window"
       @title = encodeURIComponent @settings.title
       @description = encodeURIComponent @settings.description

@@ -109,7 +109,16 @@
   window.App || (window.App = {});
 
   App.SocialBase = (function() {
+    var addhttp;
+
     SocialBase.prototype.PLUGIN_NAME = 'socialShareButtons';
+
+    addhttp = function(url) {
+      if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+        url = 'http://' + url;
+      }
+      return url;
+    };
 
     function SocialBase($container1, settings1) {
       this.$container = $container1;
@@ -121,7 +130,7 @@
         this.callbackClick = this.settings.callbackClick;
       }
       if (this.$selector.length) {
-        this.url = encodeURIComponent(this.settings.url);
+        this.url = encodeURIComponent(addhttp(this.settings.url));
         this.redirectUri = encodeURIComponent(this.settings.url + "#close_window");
         this.title = encodeURIComponent(this.settings.title);
         this.description = encodeURIComponent(this.settings.description);
