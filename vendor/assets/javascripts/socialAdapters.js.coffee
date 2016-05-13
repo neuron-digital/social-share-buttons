@@ -4,8 +4,8 @@ class App.SocialBase
   PLUGIN_NAME: 'socialShareButtons'
 
   addhttp = (url) ->
-    if !/^(?:f|ht)tps?\:\/\//.test(url)
-      url = 'http://' + url
+    if /^\/\//.test(url)
+      url = "http:#{url}"
     url
 
   constructor: (@$container, @settings) ->
@@ -17,7 +17,7 @@ class App.SocialBase
 
     if @$selector.length
       @url = encodeURIComponent addhttp(@settings.url)
-      @redirectUri = encodeURIComponent "#{@settings.url}#close_window"
+      @redirectUri = encodeURIComponent "#{addhttp(@settings.url)}#close_window"
       @title = encodeURIComponent @settings.title
       @description = encodeURIComponent @settings.description
       @image = encodeURIComponent @settings.image

@@ -1,6 +1,6 @@
 {
   "name": "social_share_buttons",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Plugin loads the number of the sharing specified page and allows you to share it",
   "main": "dist/jquery.socialShareButtons.js",
   "scripts": {

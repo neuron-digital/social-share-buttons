@@ -114,8 +114,8 @@
     SocialBase.prototype.PLUGIN_NAME = 'socialShareButtons';
 
     addhttp = function(url) {
-      if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
-        url = 'http://' + url;
+      if (/^\/\//.test(url)) {
+        url = "http:" + url;
       }
       return url;
     };
@@ -131,7 +131,7 @@
       }
       if (this.$selector.length) {
         this.url = encodeURIComponent(addhttp(this.settings.url));
-        this.redirectUri = encodeURIComponent(this.settings.url + "#close_window");
+        this.redirectUri = encodeURIComponent((addhttp(this.settings.url)) + "#close_window");
         this.title = encodeURIComponent(this.settings.title);
         this.description = encodeURIComponent(this.settings.description);
         this.image = encodeURIComponent(this.settings.image);
