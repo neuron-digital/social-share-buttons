@@ -226,7 +226,7 @@
           var winParams;
           e.preventDefault();
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
-          open("http://connect.mail.ru/share?share_url=" + _this.url + "&counturl=" + _this.url, "_blank", winParams);
+          open("http://connect.mail.ru/share?share_url=" + _this.url + "&title=" + _this.title + "&description=" + _this.description + "&imageurl=" + _this.image, "_blank", winParams);
           return _this.callbackClick(_this.type);
         };
       })(this));
