@@ -24,7 +24,7 @@
             gp: '.js-gp-counter',
             vk: '.js-vk-counter',
             ok: '.js-ok-counter',
-            mail: '.js-ok-counter'
+            mail: '.js-mail-counter'
           },
           callbackCounter: function(type, count) {},
           callbackClick: function(type) {},
@@ -111,8 +111,6 @@
     hasProp = {}.hasOwnProperty;
 
   window.App || (window.App = {});
-
-  console.log('local sharing init');
 
   App.SocialBase = (function() {
     var addhttp;
