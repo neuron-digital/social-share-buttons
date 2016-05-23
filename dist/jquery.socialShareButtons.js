@@ -15,14 +15,16 @@
             fb: '.js-fb',
             gp: '.js-gp',
             vk: '.js-vk',
-            ok: '.js-ok'
+            ok: '.js-ok',
+            mail: '.js-mail'
           },
           selectorsCounter: {
             tw: '.js-tw-counter',
             fb: '.js-fb-counter',
             gp: '.js-gp-counter',
             vk: '.js-vk-counter',
-            ok: '.js-ok-counter'
+            ok: '.js-ok-counter',
+            mail: '.js-ok-counter'
           },
           callbackCounter: function(type, count) {},
           callbackClick: function(type) {},
@@ -47,6 +49,7 @@
             new App.SocialVk($container, settings);
             new App.SocialGp($container, settings);
             new App.SocialOk($container, settings);
+            new App.SocialMail($container, settings);
           }
           if (settings.isInitScroller) {
             $(document).on("scroll." + PLUGIN_NAME, function() {
@@ -68,7 +71,8 @@
             fb: '.js-fb',
             gp: '.js-gp',
             vk: '.js-vk',
-            ok: '.js-ok'
+            ok: '.js-ok',
+            mail: '.js-mail'
           },
           containerSelector: '.socials-share-buttons-container'
         }, options);
@@ -107,6 +111,8 @@
     hasProp = {}.hasOwnProperty;
 
   window.App || (window.App = {});
+
+  console.log('local sharing init');
 
   App.SocialBase = (function() {
     var addhttp;
@@ -200,6 +206,58 @@
     };
 
     return SocialOk;
+
+  })(App.SocialBase);
+
+  App.SocialMail = (function(superClass) {
+    extend(SocialMail, superClass);
+
+    SocialMail.prototype.type = 'mail';
+
+    function SocialMail($container, settings) {
+      SocialMail.__super__.constructor.call(this, $container, settings, this.type);
+    }
+
+    SocialMail.prototype.getCount = function() {
+      return $.getJSON({
+        url: "https://connect.mail.ru/share_count?func=callback&callback=1&url_list=" + this.url,
+        success: (function(_this) {
+          return function(data) {
+            var ref, result;
+            console.log(data);
+            result = ((ref = data[0]) != null ? ref.share_count : void 0) || 0;
+            _this.$selectorCounter.text(result);
+            return _this.callbackCounter(_this.type, result);
+          };
+        })(this)
+      });
+    };
+
+    SocialMail.prototype.initClick = function() {
+      $.ajax({
+        url: "https://connect.mail.ru/share_count?url_list=" + this.url,
+        success: (function(_this) {
+          return function(data) {
+            var ref, result;
+            console.log(data);
+            result = ((ref = data[0]) != null ? ref.share_count : void 0) || 0;
+            _this.$selectorCounter.text(result);
+            return _this.callbackCounter(_this.type, result);
+          };
+        })(this)
+      });
+      return this.$selector.on("click." + this.PLUGIN_NAME, (function(_this) {
+        return function(e) {
+          var winParams;
+          e.preventDefault();
+          winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
+          open("http://connect.mail.ru/share?share_url=" + _this.url + "&counturl=" + _this.url, "_blank", winParams);
+          return _this.callbackClick(_this.type);
+        };
+      })(this));
+    };
+
+    return SocialMail;
 
   })(App.SocialBase);
 

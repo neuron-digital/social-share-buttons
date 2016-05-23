@@ -1,5 +1,7 @@
 window.App ||= {}
 
+console.log 'local sharing init'
+
 class App.SocialBase
   PLUGIN_NAME: 'socialShareButtons'
 
@@ -65,6 +67,24 @@ class App.SocialOk extends App.SocialBase
 
       @callbackClick @type
 
+class App.SocialMail extends App.SocialBase
+  type: 'mail'
+
+  constructor: ($container, settings) ->
+    super $container, settings, @type
+
+  getCount: ->
+    # CORS
+    0
+
+  initClick: ->
+    @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
+      e.preventDefault()
+      winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
+      open "http://connect.mail.ru/share?share_url=#{@url}&counturl=#{@url}", "_blank", winParams
+
+      @callbackClick @type
+
 class App.SocialGp extends App.SocialBase
   type: 'gp'
 
@@ -72,13 +92,8 @@ class App.SocialGp extends App.SocialBase
     super $container, settings, @type
 
   getCount: ->
-    $.ajax
-      url: "https://share.yandex.ru/gpp.xml?url=#{@url}"
-      dataType: 'json'
-      success: (data) =>
-        result = data or 0
-        @$selectorCounter.text result
-        @callbackCounter @type, result
+    # CORS
+    0
 
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
