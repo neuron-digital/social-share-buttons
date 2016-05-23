@@ -219,33 +219,10 @@
     }
 
     SocialMail.prototype.getCount = function() {
-      return $.getJSON({
-        url: "https://connect.mail.ru/share_count?func=callback&callback=1&url_list=" + this.url,
-        success: (function(_this) {
-          return function(data) {
-            var ref, result;
-            console.log(data);
-            result = ((ref = data[0]) != null ? ref.share_count : void 0) || 0;
-            _this.$selectorCounter.text(result);
-            return _this.callbackCounter(_this.type, result);
-          };
-        })(this)
-      });
+      return 0;
     };
 
     SocialMail.prototype.initClick = function() {
-      $.ajax({
-        url: "https://connect.mail.ru/share_count?url_list=" + this.url,
-        success: (function(_this) {
-          return function(data) {
-            var ref, result;
-            console.log(data);
-            result = ((ref = data[0]) != null ? ref.share_count : void 0) || 0;
-            _this.$selectorCounter.text(result);
-            return _this.callbackCounter(_this.type, result);
-          };
-        })(this)
-      });
       return this.$selector.on("click." + this.PLUGIN_NAME, (function(_this) {
         return function(e) {
           var winParams;
@@ -271,18 +248,7 @@
     }
 
     SocialGp.prototype.getCount = function() {
-      return $.ajax({
-        url: "https://share.yandex.ru/gpp.xml?url=" + this.url,
-        dataType: 'json',
-        success: (function(_this) {
-          return function(data) {
-            var result;
-            result = data || 0;
-            _this.$selectorCounter.text(result);
-            return _this.callbackCounter(_this.type, result);
-          };
-        })(this)
-      });
+      return 0;
     };
 
     SocialGp.prototype.initClick = function() {

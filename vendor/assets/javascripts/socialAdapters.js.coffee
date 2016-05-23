@@ -1,7 +1,5 @@
 window.App ||= {}
 
-console.log 'local sharing init'
-
 class App.SocialBase
   PLUGIN_NAME: 'socialShareButtons'
 

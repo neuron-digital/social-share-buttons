@@ -21,7 +21,7 @@ $ ->
           gp: '.js-gp-counter'
           vk: '.js-vk-counter'
           ok: '.js-ok-counter'
-          mail: '.js-ok-counter'
+          mail: '.js-mail-counter'
         callbackCounter: (type, count) ->
         callbackClick: (type) ->
         containerSelector: '.socials-share-buttons-container'
