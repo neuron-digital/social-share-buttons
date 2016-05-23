@@ -79,7 +79,7 @@ class App.SocialMail extends App.SocialBase
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
-      open "http://connect.mail.ru/share?share_url=#{@url}&counturl=#{@url}", "_blank", winParams
+      open "http://connect.mail.ru/share?share_url=#{@url}&title=#{@title}&description=#{@description}&imageurl=#{@image}", "_blank", winParams
 
       @callbackClick @type
 
