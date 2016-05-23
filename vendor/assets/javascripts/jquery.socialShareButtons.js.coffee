@@ -14,12 +14,14 @@ $ ->
           gp: '.js-gp'
           vk: '.js-vk'
           ok: '.js-ok'
+          mail: '.js-mail'
         selectorsCounter:
           tw: '.js-tw-counter'
           fb: '.js-fb-counter'
           gp: '.js-gp-counter'
           vk: '.js-vk-counter'
           ok: '.js-ok-counter'
+          mail: '.js-mail-counter'
         callbackCounter: (type, count) ->
         callbackClick: (type) ->
         containerSelector: '.socials-share-buttons-container'
@@ -42,6 +44,7 @@ $ ->
           new App.SocialVk $container, settings
           new App.SocialGp $container, settings
           new App.SocialOk $container, settings
+          new App.SocialMail $container, settings
 
         if settings.isInitScroller
           $(document).on "scroll.#{PLUGIN_NAME}", ->
@@ -60,6 +63,7 @@ $ ->
           gp: '.js-gp'
           vk: '.js-vk'
           ok: '.js-ok'
+          mail: '.js-mail'
         containerSelector: '.socials-share-buttons-container'
       , options
 
