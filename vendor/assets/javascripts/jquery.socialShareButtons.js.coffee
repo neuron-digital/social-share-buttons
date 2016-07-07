@@ -25,7 +25,7 @@ $ ->
         callbackCounter: (type, count) ->
         callbackClick: (type) ->
         containerSelector: '.socials-share-buttons-container'
-        url: location.href
+        url: decodeURI(location.href)
         title: $("meta[property='og:title']").attr("content") or document.title
         image: $("meta[property='og:image']").attr("content")
         description: $("meta[name='description']").attr("content")
