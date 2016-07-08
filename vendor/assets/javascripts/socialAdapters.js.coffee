@@ -177,7 +177,14 @@ class App.SocialVk extends App.SocialBase
   initClick: ->
     @$selector.on "click.#{@PLUGIN_NAME}", (e) =>
       e.preventDefault()
+      if @settings.description.length > 80
+        @description = "#{@settings.description.substr(0, 80)}..."
+      if @settings.title.length > 80
+        @title = "#{@settings.title.substr(0, 80)}..."
+
       params = "url=#{@url}&title=#{@title}&description=#{@description}&image=#{@image}&noparse=true"
+      if @settings.isVkParse
+        params = "url=#{@url}"
 
       winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0"
       open "https://vk.com/share.php?#{params}", "_blank", winParams

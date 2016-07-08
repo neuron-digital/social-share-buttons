@@ -25,12 +25,13 @@ $ ->
         callbackCounter: (type, count) ->
         callbackClick: (type) ->
         containerSelector: '.socials-share-buttons-container'
-        url: decodeURI(location.href)
+        url: location.href
         title: $("meta[property='og:title']").attr("content") or document.title
         image: $("meta[property='og:image']").attr("content")
         description: $("meta[name='description']").attr("content")
         fbAppId: $("meta[property='fb:app_id']").attr("content")
         isInitScroller: false
+        isVkParse: false
         scrollerOffset: ($socials) ->
           $socials.offset().top + $socials.height()
       , options
