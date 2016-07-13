@@ -35,6 +35,7 @@
           description: $("meta[name='description']").attr("content"),
           fbAppId: $("meta[property='fb:app_id']").attr("content"),
           isInitScroller: false,
+          isVkParse: false,
           scrollerOffset: function($socials) {
             return $socials.offset().top + $socials.height();
           }
@@ -379,7 +380,16 @@
         return function(e) {
           var params, winParams;
           e.preventDefault();
+          if (_this.settings.description.length > 80) {
+            _this.description = (_this.settings.description.substr(0, 80)) + "...";
+          }
+          if (_this.settings.title.length > 80) {
+            _this.title = (_this.settings.title.substr(0, 80)) + "...";
+          }
           params = "url=" + _this.url + "&title=" + _this.title + "&description=" + _this.description + "&image=" + _this.image + "&noparse=true";
+          if (_this.settings.isVkParse) {
+            params = "url=" + _this.url;
+          }
           winParams = "scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0";
           open("https://vk.com/share.php?" + params, "_blank", winParams);
           return _this.callbackClick(_this.type);

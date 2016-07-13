@@ -31,6 +31,7 @@ $ ->
         description: $("meta[name='description']").attr("content")
         fbAppId: $("meta[property='fb:app_id']").attr("content")
         isInitScroller: false
+        isVkParse: false
         scrollerOffset: ($socials) ->
           $socials.offset().top + $socials.height()
       , options
